@@ -1,0 +1,74 @@
+#pokeball{
+  position: relative;
+  height: 5rem;
+  width: 5rem;
+  display: flex;
+  flex-flow: column nowrap;
+  border: 5px solid #000;
+  border-radius: 50%;
+  box-shadow: inset 0 0 1.5rem 0.5rem rgb(0, 0, 0, 0.1);
+}
+.animate{
+  animation: spin 1s infinite linear;
+}
+.poketop, .pokebottom{
+  height: 50%;
+  width: 100%;
+}
+.poketop{
+  border-radius: 50rem 50rem 0 0;
+  background-color: #D5382F;
+  box-shadow: inset -0.1rem 1rem 1.2rem 0.5rem rgb(255, 112, 95, 0.2);
+}
+.pokebottom{
+  border-radius: 0 0 50rem 50rem;
+  background-color: #FFF;
+  box-shadow: inset -0.1rem 0 1.2rem 0.5rem rgb(0, 0, 0, 0.1);
+}
+.opening{
+  position: absolute; 
+  top: 44.5%; 
+  height: 0.4rem;
+  width: 100%;
+  background-color: #000;
+  box-shadow: 0 0 0.2rem 0 rgb(0, 0, 0, 0.1);
+}
+.button-black-circle{
+  position: absolute;
+  top: 32%;
+  left: 32%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.6rem;
+  width: 1.6rem;
+  border-radius: 50%;
+  background-color: #000;
+  box-shadow: 0 0 0.5rem 0 rgb(0, 0, 0, 0.1);
+}
+.button-white-circle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.1rem;
+  width: 1.1rem;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.open-button{
+  height: 0.65rem;
+  width: 0.65rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 0 0.5rem 0 rgb(0, 0, 0, 0.35);
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}
