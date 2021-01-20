@@ -1,6 +1,6 @@
 import '../styles/spinner.css'
 
-function Spinner() {
+const Spinner = () => {
   return (
     <div id="pokeball" className="animate">
       <div className="poketop"></div>
