@@ -1,15 +1,14 @@
-import Spinner from './components/Spinner'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/Navbar'
 
 function App() {
   return (
-    <div className="App">
-
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <p className="text-center">Olá, grupo!</p>
-        <Spinner />
+    <Router>
+      <div className="App">
+        <Navbar />
+      
       </div>
-     
-    </div>
+    </Router>
   );
 }
 
