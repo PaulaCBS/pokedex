@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState } from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar/Navbar';
 
 const App = () => {
   // DADOS PARA TESTAR A BARRA DE BUSCA - SUBSTITUIR
