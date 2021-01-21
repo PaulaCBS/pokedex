@@ -5,6 +5,8 @@ import Navbar from './components/Navbar';
 const App = () => {
   const [pokemons, setPokemons] = useState();
 
+  const[loading, setLoading] = useState(true);
+
   useEffect( () => {
     getPokemons("https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118");
   }, [] )
@@ -14,13 +16,15 @@ const App = () => {
       .then( res => res.json())
       .then( data => {
         const pokemonsList = data.results;
-        Promise.all(
+        setPokemons(pokemonsList)
+        setLoading(false)
+        /*Promise.all(
           pokemonsList.map( pokemon => {
             fetch( pokemon.url )
               .then( res => res.json() )
               .then( singlePokemon => setPokemons(singlePokemon) );
           })
-        )
+        )*/
       })
   }
 
@@ -28,6 +32,9 @@ const App = () => {
     <Router>
       <div className="App">
         <Navbar pokemons={pokemons} />
+        {
+          if(loading) return <Spinner />
+        }
       </div>
     </Router>
   );
