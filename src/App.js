@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
+import { useState. useEffect } from 'react';
+import Navbar from './components/Navbar/Navbar';
 
 const App = () => {
   const [pokemons, setPokemons] = useState();
@@ -33,7 +33,7 @@ const App = () => {
       <div className="App">
         <Navbar pokemons={pokemons} />
         {
-          if(loading) return <Spinner />
+          
         }
       </div>
     </Router>
