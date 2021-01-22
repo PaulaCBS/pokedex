@@ -2,10 +2,8 @@ import { NavLink } from 'react-router-dom';
 import './navbar.css';
 
 const Navbar = (props) => {
-  const search = (e) => {
-    const pattern = e.target.value;
-    const searchResults = props.pokemons.filter(pokemon => pokemon.name.match(pattern));
-  }
+
+  const search = props.search;
 
   return (
     <div className="nav-bar flex-row-center">
@@ -21,7 +19,7 @@ const Navbar = (props) => {
           <NavLink to="/meus-pokemons" className="navlink" activeClassName="active">Meus Pokémons</NavLink>
         </div>
         <div className="search-wraper col-9 col-sm-6 col-lg-3">
-          <input type="search" placeholder="Buscar..." onChange={search} id="search" className="col-12" autoComplete="off"/>
+          <input type="search" placeholder="Buscar..." onChange={ search } id="search" className="col-12" autoComplete="off"/>
         </div>
       </div>
      

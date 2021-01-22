@@ -1,5 +1,3 @@
-import {useState, useEffect} from 'react';
-
 const Card = (props) => {
 
   const { name, id } = props;
@@ -12,7 +10,7 @@ const Card = (props) => {
         <img src={ img } alt="imagem do pokemon" className="card-img"/>
       </div>
       <div className="card-body">
-        <p className="card-id">{ id }</p>
+        <p className="card-id">#{ id }</p>
         <p className="card-name">{ name }</p>
       </div>
     </div>

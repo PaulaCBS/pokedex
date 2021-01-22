@@ -2,17 +2,18 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import AllPokemons from './components/AllPokemons/AllPokemons';
+import Spinner from './components/Spinner/Spinner'
 
 const App = () => {
   const [ pokemons, setPokemons ] = useState([]);
 
   const[ loading, setLoading ] = useState(true);
 
-  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=5");
+  const[ search, setSearch ] = useState(false);
 
-  useEffect(() => {
-      getData(page)
-  }, [page]);
+  const[ searchResults, setSearchResults ] = useState([]);
+
+  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");
 
   const getData = (page) => {
     fetch(page)
@@ -33,11 +34,37 @@ const App = () => {
       });
   }
 
+  const searchFilter = (e) => {
+    setSearch(true)
+    const pattern = e.target.value;
+    const searchResults = pokemons.filter(pokemon => pokemon.name.match(pattern));
+
+    searchResults.forEach( result => setSearchResults(
+      searchResults.filter( (item, index) => {
+        const noDuplicates = searchResults.indexOf(item) === index;
+        return searchResults.concat(noDuplicates)
+      }))  
+    )
+  }
+
+  useEffect(() => {
+      getData(page)
+  }, [page]);
+
+  useEffect(() => {
+  }, [search, searchFilter])
+
+
   return (
     <Router>
       <div className="App">
-        <Navbar pokemons={ pokemons } />
-        <AllPokemons pokemons={ pokemons } loading={ loading }/>
+        <Navbar pokemons={ pokemons } search={ searchFilter }/>
+        <Route exact path="/">
+          {
+            loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults }/>
+          }
+        </Route>
+        
       </div>
     </Router>
   );
