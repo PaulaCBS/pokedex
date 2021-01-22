@@ -25,19 +25,13 @@ const App = () => {
         results.forEach((pokemon, index) => {
           newPokemonData[index] = {
             id: index + 1,
-            name: pokemon.name,
-            details: pokemon.url,
+            name: pokemon.name
           };
         });
         setPokemons(newPokemonData);
         setLoading(false)
       });
   }
-  /*const getDetails = (pokemonsUrl) => {
-    Promise.all(
-      
-    )
-  }*/
 
   return (
     <Router>
