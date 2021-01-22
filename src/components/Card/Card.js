@@ -2,12 +2,13 @@ import {useState, useEffect} from 'react';
 import Spinner from '../Spinner/Spinner';
 
 const Card = (props) => {
-  const [details, setDetails] = useState();
+  const [details, setDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const { name, url, id } = props
 
   useEffect(() => {
+    setIsLoading(false)
     return () => {
       getDetails(url)
     }
@@ -15,25 +16,29 @@ const Card = (props) => {
 
   const getDetails = (url) => {
     fetch(url)
-    .then( res => res.json())
-    .then( data => {
-      setDetails(data)
-      setIsLoading(false)
-    })
+      .then( res => res.json())
+      .then(data => {
+        const detailsList = [data]
+        console.log(detailsList)
+        setDetails(data);
+      });
   }
 
-  const img = details/*.sprites.front_default*/;
+  //console.log(details)
+
+  //console.log(details.sprites.front_default)
+  //const img = details.sprites.front_default;
 
   return(
-    isLoading ? <Spinner /> : <div className="card">
-                                <div className="card-header">
-                                  <img src={img} alt="pokemon-img" className="card-img"/>
-                                </div>
-                                <div className="card-body">
-                                  <p className="card-id">{ id }</p>
-                                  <p className="card-name">{ name }</p>
-                                </div>
-                              </div>
+    <div className="card">
+      <div className="card-header">
+
+      </div>
+      <div className="card-body">
+      <p className="card-id">{ id }</p>
+      <p className="card-name">{ name }</p>
+      </div>
+    </div>
   )
 }
 
