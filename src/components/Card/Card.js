@@ -22,9 +22,6 @@ const Card = (props) => {
     })
   }
 
-  //const types = details.types;
-  //console.log(types)
-
   const img = details/*.sprites.front_default*/;
 
   return(
