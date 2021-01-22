@@ -1,12 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-<<<<<<< HEAD
-import { useState } from 'react';
-import Navbar from './components/Navbar/Navbar';
-=======
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import AllPokemons from './components/AllPokemons/AllPokemons';
->>>>>>> dados-api
 
 const App = () => {
   const [ pokemons, setPokemons ] = useState();
