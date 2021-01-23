@@ -4,36 +4,41 @@ import Navbar from './components/Navbar/Navbar';
 import AllPokemons from './components/AllPokemons/AllPokemons';
 import MyPokemons from './components/MyPokemons/MyPokemons'
 import Spinner from './components/Spinner/Spinner'
+import Pagination from '../src/components/Paginacao/Pagination';
 
 const App = () => {
   const [ pokemons, setPokemons ] = useState([]);
 
-  const[ loading, setLoading ] = useState(true);
+  const [ loading, setLoading ] = useState(true);
 
   const [captured, setCaptured] = useState([]);
 
   const capturedPokemon = { captured, setCaptured };
 
-  const[ search, setSearch ] = useState(false);
+  const [ search, setSearch ] = useState(false);
 
-  const[ searchResults, setSearchResults ] = useState([]);
+  const [ searchResults, setSearchResults ] = useState([]);
 
-  const [ page, setPage ] = useState({
-    offset: 0,
-    url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
-  });
+  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=1118");
+
+  const [ pageOffset, setPageOffset ] = useState(0);
+
+  const [pageLimit, setPageLimit ] = useState(20)
+  //const [nextPageUrl, setNextPageUrl] = useState();
+  //const [prevPageUrl, setPrevPageUrl] = useState();
+  //const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon");
 
   const getData = (page) => {
-    fetch(page.url)
+    fetch(page)
       .then( res => res.json())
       .then(data => {
-        const { next } = data;
-        const { previus } = data;
+        //setNextPageUrl(data.next);
+        //setPrevPageUrl(data.previous);
         const { results } = data;
         const newPokemonData = [];
         results.forEach((pokemon, index) => {
           newPokemonData[index] = {
-            id: page.offset += 1,
+            id: index + 1,
             name: pokemon.name,
             url: pokemon.url
           };
@@ -41,6 +46,20 @@ const App = () => {
         setPokemons(newPokemonData);
         setLoading(false)
       });
+  }
+  
+  function gotoNextPage() {
+    const newOffset = pageOffset + 20;
+    const newLimit = pageLimit + 20;
+    setPageOffset(newOffset)
+    setPageOffset(newLimit)
+  }
+
+  function gotoPrevPage() {
+    const newOffset = pageOffset - 20;
+    const newLimit = pageLimit - 20;
+    setPageOffset(newOffset)
+    setPageOffset(newLimit)
   }
 
   const searchFilter = (e) => {
@@ -75,15 +94,16 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             {
-              loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } />
+              loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } pageOffset={ pageOffset } pageLimit={ pageLimit }/>
             }
           </Route>
           <Route exact path="/meus-pokemons">
-          {
-            loading ? <Spinner /> : <MyPokemons/>
-          }
-        </Route>
-      </Switch>        
+            {     
+              loading ? <Spinner /> : <MyPokemons />
+            }
+          </Route>
+        </Switch>
+        <Pagination prev={ gotoPrevPage } next={ gotoNextPage }/>
       </div>
     </Router>
   );

@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+  position: relative;
   outline: none;
   border: none;
   box-sizing: border-box;
