@@ -2,8 +2,8 @@
   width: 7rem;
   height: 2.4rem;
   border-radius: 0.3rem;
-  background: #3761a8;
-  color: #FFF;
+  background: white;
+  color: #3761a8;
 }
 .capturado{
   width: 7rem;
@@ -51,6 +51,10 @@
   }
   
   .flip-card-back {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
     background-color:  #3761a8;
     color: white;
     transform: rotateY(180deg);
@@ -75,7 +79,6 @@
 }
 
 .btn-capturar {
-	background-color:#3762ab;
 	-webkit-border-top-left-radius:10px;
 	-moz-border-radius-topleft:10px;
 	border-top-left-radius:10px;
