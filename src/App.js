@@ -3,24 +3,23 @@ import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import AllPokemons from './components/AllPokemons/AllPokemons';
 import Spinner from './components/Spinner/Spinner'
+import Pagination from '../src/components/Paginacao/Paginacao';
 
 const App = () => {
   const [ pokemons, setPokemons ] = useState([]);
-
   const[ loading, setLoading ] = useState(true);
-
   const[ search, setSearch ] = useState(false);
-
   const[ searchResults, setSearchResults ] = useState([]);
-
-  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");
+  const [nextPageUrl, setNextPageUrl] = useState();
+  const [prevPageUrl, setPrevPageUrl] = useState();
+  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon");
 
   const getData = (page) => {
     fetch(page)
       .then( res => res.json())
       .then(data => {
-        const { next } = data;
-        const { previus } = data;
+        setNextPageUrl(data.next);
+        setPrevPageUrl(data.previous);
         const { results } = data;
         const newPokemonData = [];
         results.forEach((pokemon, index) => {
@@ -32,6 +31,14 @@ const App = () => {
         setPokemons(newPokemonData);
         setLoading(false)
       });
+  }
+  
+  function gotoNextPage() {
+    setPage(nextPageUrl)
+  }
+
+  function gotoPrevPage() {
+    setPage(prevPageUrl)
   }
 
   const searchFilter = (e) => {
@@ -61,10 +68,13 @@ const App = () => {
         <Navbar pokemons={ pokemons } search={ searchFilter }/>
         <Route exact path="/">
           {
-            loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults }/>
+            loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } />
           }
         </Route>
-        
+        <Pagination 
+         gotoNextPage={nextPageUrl ? gotoNextPage : null}
+         gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
+        />
       </div>
     </Router>
   );
