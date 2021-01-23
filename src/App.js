@@ -32,9 +32,7 @@ const App = () => {
         setLoading(false)
       });
   }
-
   
-
   function gotoNextPage() {
     setPage(nextPageUrl)
   }
