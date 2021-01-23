@@ -1,3 +1,17 @@
+.solto{
+  width: 7rem;
+  height: 2.4rem;
+  border-radius: 0.3rem;
+  background: #3761a8;
+  color: #FFF;
+}
+.capturado{
+  width: 7rem;
+  height: 2.4rem;
+  border-radius: 0.3rem;
+  background: #F2994A;
+  color: #FFF;
+}
 .flip-card {
     background-color: transparent;
     width: 250px;
