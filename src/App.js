@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import AllPokemons from './components/AllPokemons/AllPokemons';
+import MyPokemons from './components/MyPokemons/MyPokemons'
 import Spinner from './components/Spinner/Spinner'
 
 const App = () => {
@@ -9,14 +10,21 @@ const App = () => {
 
   const[ loading, setLoading ] = useState(true);
 
+  const [captured, setCaptured] = useState([]);
+
+  const capturedPokemon = { captured, setCaptured };
+
   const[ search, setSearch ] = useState(false);
 
   const[ searchResults, setSearchResults ] = useState([]);
 
-  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon?offset=0&limit=20");
+  const [ page, setPage ] = useState({
+    offset: 0,
+    url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"
+  });
 
   const getData = (page) => {
-    fetch(page)
+    fetch(page.url)
       .then( res => res.json())
       .then(data => {
         const { next } = data;
@@ -25,8 +33,9 @@ const App = () => {
         const newPokemonData = [];
         results.forEach((pokemon, index) => {
           newPokemonData[index] = {
-            id: index + 1,
-            name: pokemon.name
+            id: page.offset += 1,
+            name: pokemon.name,
+            url: pokemon.url
           };
         });
         setPokemons(newPokemonData);
@@ -47,24 +56,34 @@ const App = () => {
     )
   }
 
-  useEffect(() => {
+  //const capturedContext = createContext({
+    //language: "en",
+    //setLanguage: () => {}
+  //});
+
+  useEffect( () => {
       getData(page)
   }, [page]);
 
-  useEffect(() => {
+  useEffect( () => {
   }, [search, searchFilter])
-
 
   return (
     <Router>
       <div className="App">
         <Navbar pokemons={ pokemons } search={ searchFilter }/>
-        <Route exact path="/">
+        <Switch>
+          <Route exact path="/">
+            {
+              loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } />
+            }
+          </Route>
+          <Route exact path="/meus-pokemons">
           {
-            loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults }/>
+            loading ? <Spinner /> : <MyPokemons/>
           }
         </Route>
-        
+      </Switch>        
       </div>
     </Router>
   );
