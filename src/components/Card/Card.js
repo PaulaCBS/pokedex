@@ -35,15 +35,3 @@ const Card = (props) => {
 }
 
 export default Card;
-
-/**
-      <div className="card">
-        <div className="card-header">
-          <img src={ img } alt="imagem do pokemon" className="card-img"/>
-        </div>
-        <div className="card-body">
-          <p className="card-id">#{ id }</p>
-          <p className="card-name">{ name }</p>
-        </div>
-      </div>
- */

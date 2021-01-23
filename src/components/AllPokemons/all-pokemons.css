@@ -1,5 +1,6 @@
 .cards-list{
   width: 100%;
+  margin: 0;
   padding: 5% 8%;
   display: flex;
   flex-flow: row wrap;

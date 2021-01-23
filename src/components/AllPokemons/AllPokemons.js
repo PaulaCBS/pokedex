@@ -16,7 +16,7 @@ const AllPokemons = (props) => {
   const {search, searchResults} = props;
 
   return(
-    <div className="cards-list container">
+    <div className="cards-list">
       {
         search ? searchResults.map( (pokemon, index) => <Card name={pokemon.name} key={index} id={pokemon.id} />) : pagePokemons.map( (pokemon, index) => <Card name={pokemon.name} id={pokemon.id} key={index} />)  
       }
