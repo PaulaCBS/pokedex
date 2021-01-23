@@ -14,11 +14,13 @@
 }
 .flip-card {
     background-color: transparent;
-    width: 200px;
-    height: 200px;
-    perspective: 1000px;
+    width: 250px;
+    height: 250px;
+    perspective: 800px;
     float: left;
     padding: 10px;
+    text-align: center;
+    margin: 20px;
   }
   
   .flip-card-inner {
@@ -44,12 +46,101 @@
   }
   
   .flip-card-front {
-    background-color: #3760a842;
+    background-color: #;
     color: black;
   }
   
   .flip-card-back {
-    background-color:  #3760a879;
+    background-color:  #3761a8;
     color: white;
     transform: rotateY(180deg);
   }
+
+  .flip-card-front img{
+      position: relative;
+      width: 200px; 
+      height: 200px;
+  }
+
+.card-title .card-text{
+    font-weight: 800;
+}
+
+.card-title{
+    color: #888;
+}
+
+.card-text{
+    color: #212529;
+}
+
+.btn-capturar {
+	background-color:#3762ab;
+	-webkit-border-top-left-radius:10px;
+	-moz-border-radius-topleft:10px;
+	border-top-left-radius:10px;
+	-webkit-border-top-right-radius:10px;
+	-moz-border-radius-topright:10px;
+	border-top-right-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	border-bottom-right-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-moz-border-radius-bottomleft:10px;
+	border-bottom-left-radius:10px;
+    text-indent:0;
+	display:inline-block;
+	color:#ffffff;
+	font-family:Trebuchet MS;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+    height:50px;
+	line-height:50px;
+    width:140px;
+	text-decoration:none;
+    text-align:center;
+    margin-left: 10px;
+    margin-bottom: 30px;
+}.btn-next:hover {
+	background-color:#3972d4;
+}.btn-next:active {
+	position:relative;
+	top:1px;
+}
+
+.btn-soltar {
+	background-color:#ffffff;
+	-webkit-border-top-left-radius:10px;
+	-moz-border-radius-topleft:10px;
+	border-top-left-radius:10px;
+	-webkit-border-top-right-radius:10px;
+	-moz-border-radius-topright:10px;
+	border-top-right-radius:10px;
+	-webkit-border-bottom-right-radius:10px;
+	-moz-border-radius-bottomright:10px;
+	border-bottom-right-radius:10px;
+	-webkit-border-bottom-left-radius:10px;
+	-moz-border-radius-bottomleft:10px;
+	border-bottom-left-radius:10px;
+    text-indent:0;
+	display:inline-block;
+	color:#3762ab;
+	font-family:Trebuchet MS;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+    height:50px;
+	line-height:50px;
+    width:140px;
+	text-decoration:none;
+    text-align:center;
+    border-color: #3762ab;
+    border: 1px solid;
+    margin-bottom: 30px;
+}.btn-previous:hover {
+	background-color:#dedede;
+}.btn-previous:active {
+	position:relative;
+	top:1px;
+}
