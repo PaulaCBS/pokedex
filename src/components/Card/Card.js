@@ -4,7 +4,7 @@ import './card.css';
 
 const Card = (props) => {
 
-  const { name, id } = props;
+  let { name, id } = props;
 
   const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 

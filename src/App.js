@@ -13,8 +13,6 @@ const App = () => {
 
   const [captured, setCaptured] = useState([]);
 
-  const capturedPokemon = { captured, setCaptured };
-
   const [ search, setSearch ] = useState(false);
 
   const [ searchResults, setSearchResults ] = useState([]);
@@ -24,6 +22,9 @@ const App = () => {
   const [ pageOffset, setPageOffset ] = useState(0);
 
   const [pageLimit, setPageLimit ] = useState(20)
+
+  const [ pokemonsOnPage, setPokemonsOnPage ] = useState( pokemons.slice(0, 20) )
+  
   //const [nextPageUrl, setNextPageUrl] = useState();
   //const [prevPageUrl, setPrevPageUrl] = useState();
   //const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon");
@@ -43,23 +44,19 @@ const App = () => {
             url: pokemon.url
           };
         });
-        setPokemons(newPokemonData);
+        setPokemons(newPokemonData.slice(pageOffset, pageLimit));
         setLoading(false)
       });
   }
   
   function gotoNextPage() {
-    const newOffset = pageOffset + 20;
-    const newLimit = pageLimit + 20;
-    setPageOffset(newOffset)
-    setPageOffset(newLimit)
+    setPageOffset(pageOffset => pageOffset + 20)
+    setPageLimit(pageLimit => pageLimit + 20)
   }
 
   function gotoPrevPage() {
-    const newOffset = pageOffset - 20;
-    const newLimit = pageLimit - 20;
-    setPageOffset(newOffset)
-    setPageOffset(newLimit)
+    setPageOffset(pageOffset => pageOffset - 20)
+    setPageLimit(pageLimit => pageLimit - 20)
   }
 
   const searchFilter = (e) => {
@@ -75,17 +72,13 @@ const App = () => {
     )
   }
 
-  //const capturedContext = createContext({
-    //language: "en",
-    //setLanguage: () => {}
-  //});
-
   useEffect( () => {
       getData(page)
-  }, [page]);
+  }, [page, gotoNextPage, gotoPrevPage]);
 
   useEffect( () => {
   }, [search, searchFilter])
+
 
   return (
     <Router>
@@ -94,7 +87,7 @@ const App = () => {
         <Switch>
           <Route exact path="/">
             {
-              loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } pageOffset={ pageOffset } pageLimit={ pageLimit }/>
+              loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } pokemons={ pokemons }/>
             }
           </Route>
           <Route exact path="/meus-pokemons">
