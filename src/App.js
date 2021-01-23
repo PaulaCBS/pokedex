@@ -1,38 +1,82 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar/Navbar';
+import AllPokemons from './components/AllPokemons/AllPokemons';
+import Spinner from './components/Spinner/Spinner'
+import Pagination from '../src/components/Paginacao/Paginacao';
 
 const App = () => {
-  // DADOS PARA TESTAR A BARRA DE BUSCA - SUBSTITUIR
-  const [pokemons, setPokemons] = useState(
-    [
-      {"name":"unown","url":"https://pokeapi.co/api/v2/pokemon/201/"},
-      {"name":"wobbuffet","url":"https://pokeapi.co/api/v2/pokemon/202/"},
-      {"name":"girafarig","url":"https://pokeapi.co/api/v2/pokemon/203/"},
-      {"name":"pineco","url":"https://pokeapi.co/api/v2/pokemon/204/"},
-      {"name":"forretress","url":"https://pokeapi.co/api/v2/pokemon/205/"},
-      {"name":"dunsparce","url":"https://pokeapi.co/api/v2/pokemon/206/"},
-      {"name":"gligar","url":"https://pokeapi.co/api/v2/pokemon/207/"},
-      {"name":"steelix","url":"https://pokeapi.co/api/v2/pokemon/208/"},
-      {"name":"snubbull","url":"https://pokeapi.co/api/v2/pokemon/209/"},
-      {"name":"granbull","url":"https://pokeapi.co/api/v2/pokemon/210/"},
-      {"name":"qwilfish","url":"https://pokeapi.co/api/v2/pokemon/211/"},
-      {"name":"scizor","url":"https://pokeapi.co/api/v2/pokemon/212/"},
-      {"name":"shuckle","url":"https://pokeapi.co/api/v2/pokemon/213/"},
-      {"name":"heracross","url":"https://pokeapi.co/api/v2/pokemon/214/"},
-      {"name":"sneasel","url":"https://pokeapi.co/api/v2/pokemon/215/"},
-      {"name":"teddiursa","url":"https://pokeapi.co/api/v2/pokemon/216/"},
-      {"name":"ursaring","url":"https://pokeapi.co/api/v2/pokemon/217/"},
-      {"name":"slugma","url":"https://pokeapi.co/api/v2/pokemon/218/"},
-      {"name":"magcargo","url":"https://pokeapi.co/api/v2/pokemon/219/"},
-      {"name":"swinub","url":"https://pokeapi.co/api/v2/pokemon/220/"}
-    ]
-  );
+  const [ pokemons, setPokemons ] = useState([]);
+  const[ loading, setLoading ] = useState(true);
+  const[ search, setSearch ] = useState(false);
+  const[ searchResults, setSearchResults ] = useState([]);
+  const [nextPageUrl, setNextPageUrl] = useState();
+  const [prevPageUrl, setPrevPageUrl] = useState();
+  const [ page, setPage ] = useState("https://pokeapi.co/api/v2/pokemon");
+
+  const getData = (page) => {
+    fetch(page)
+      .then( res => res.json())
+      .then(data => {
+        setNextPageUrl(data.next);
+        setPrevPageUrl(data.previous);
+        const { results } = data;
+        const newPokemonData = [];
+        results.forEach((pokemon, index) => {
+          newPokemonData[index] = {
+            id: index + 1,
+            name: pokemon.name
+          };
+        });
+        setPokemons(newPokemonData);
+        setLoading(false)
+      });
+  }
+
+  
+
+  function gotoNextPage() {
+    setPage(nextPageUrl)
+  }
+
+  function gotoPrevPage() {
+    setPage(prevPageUrl)
+  }
+
+  const searchFilter = (e) => {
+    setSearch(true)
+    const pattern = e.target.value;
+    const searchResults = pokemons.filter(pokemon => pokemon.name.match(pattern));
+
+    searchResults.forEach( result => setSearchResults(
+      searchResults.filter( (item, index) => {
+        const noDuplicates = searchResults.indexOf(item) === index;
+        return searchResults.concat(noDuplicates)
+      }))  
+    )
+  }
+
+  useEffect(() => {
+      getData(page)
+  }, [page]);
+
+  useEffect(() => {
+  }, [search, searchFilter])
+
+
   return (
     <Router>
       <div className="App">
-        <Navbar pokemons={pokemons} />
-      
+        <Navbar pokemons={ pokemons } search={ searchFilter }/>
+        <Route exact path="/">
+          {
+            loading ? <Spinner /> : <AllPokemons pokemons={ pokemons } loading={ loading } search={ search } searchResults={ searchResults } />
+          }
+        </Route>
+        <Pagination 
+         gotoNextPage={nextPageUrl ? gotoNextPage : null}
+         gotoPrevPage={prevPageUrl ? gotoPrevPage : null}
+        />
       </div>
     </Router>
   );
